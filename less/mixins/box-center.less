@@ -1,0 +1,61 @@
+
+/// 使用translate实现水平垂直居中
+/// @author youngpan
+/// @param {String} @direction [both] - 水平垂直,其它值`horizontal`和`vertical`
+/// @example
+/// //less
+/// .center{
+///   .center-translate;
+/// }
+///
+/// //CSS
+/// .center {
+///   position: absolute;
+///   top: 50%;
+///   left: 50%;
+///   transform: translate3d(-50%, -50%, 0);
+/// }
+.center-translate (@direction: both) {
+  position: absolute;
+
+  & when (@direction = both) {
+      top: 50%;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0);
+  }
+
+  & when (@direction = horizontal) {
+      left: 50%;
+      transform: translate3d(-50%, 0, 0);
+  }
+
+  & when (@direction = vertical) {
+      top: 50%;
+      transform: translate3d(0, -50%, 0);
+  }
+}
+
+/// 元素垂直水平居中
+/// @author youngpan
+/// @param  {[string]} @justify    [center] 水平对齐方向
+/// @param  {[string]} @align      [center] 垂直对齐方向
+/// @example
+/// //leSS
+///
+/// .justify-center {
+///     .box-center;
+/// }
+///
+/// //CSS
+///
+/// .justify-cnter {
+///     display: flex;
+///     justify-content: center;
+///     align-items: center;
+/// }
+///
+.box-center(@justify:center, @align: center) {
+  display: flex;
+  justify-content: @justify;
+  align-items: @align;
+}

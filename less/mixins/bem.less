@@ -1,0 +1,107 @@
+////
+/// Customizable mixins for BEM syntax.
+/// @author yangpan
+////
+
+
+/// @example
+/// .b(blockName, {
+///   font-size: 36px;
+///
+///   .e(elementName, {
+///       font-size: 24px;
+///
+///       .m(modifierName, {
+///           font-size: 12px;
+///       });
+///   });
+/// });
+
+/// output
+// .blockName {
+//   font-size: 36px;
+// }
+// .blockName__elementName {
+//   font-size: 24px;
+// }
+// .blockName__elementName--modifierName {
+//   font-size: 12px;
+// }
+
+
+/// Block
+@blockSeparator: '';
+
+/// Element
+@elementSeparator: '__';
+
+/// Modifier
+@modifierSeparator: '--';
+
+/// Block mixin
+/// @param {string} @block - Name of the block.
+/// @param {*} @content - CSS rules for the block. Nested mixins can be used.
+// .b(@block, @content) when (length(@block) = 1) {
+//     @block-prefix: e(@blockSeparator);
+//     @name: e(@block);
+
+//     .@{block-prefix}@{name} {
+
+//         @content();
+//     }
+// };
+.b(@block, @content) when (length(@block) > 0){
+    .loop(@i) when (@i > 0) {
+        @block-prefix: e(@blockSeparator);
+        @block-name: e(extract(@block, @i));
+        .@{block-name} {
+            @content();
+        }
+        .loop(@i - 1);
+    }
+    .loop(length(@block));
+};
+
+/// Element mixin
+/// @param {list} $element - Name of the element.
+/// @param {*} @content - CSS rules for the element. Nested mixins can be used.
+// .e(@element, @content) when (length(@element) = 1) {
+//     @element-name: e(@element);
+//     @element-prefix: e(@elementSeparator);
+
+//     &@{element-prefix}@{element-name} {
+
+//         @content();
+//     }
+// }
+
+.e(@element, @content) when (length(@element) > 0){
+    @element-prefix: e(@elementSeparator);
+    .loop(@i) when (@i > 0) {
+        @element-name: e(extract(@element, @i));
+        &@{element-prefix}@{element-name} {
+
+            @content();
+        }
+        .loop(@i - 1);
+    }
+
+    .loop(length(@element));
+}
+
+
+/// Modifier mixin
+/// @param {string} $modifier - Name of the modifier.
+/// @param {*} @content - CSS rules for the element. Nested mixins can be used.
+.m(@modifier, @content) when (length(@modifier) > 0){
+    @modifier-prefix: e(@modifierSeparator);
+    .loop(@i) when (@i > 0) {
+        @modifier-name: e(extract(@modifier, @i));
+        &@{modifier-prefix}@{modifier-name} {
+            @content();
+        }
+        .loop(@i - 1);
+    }
+
+    .loop(length(@modifier));
+}
