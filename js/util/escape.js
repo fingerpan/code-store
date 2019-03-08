@@ -22,7 +22,7 @@ const escapeCharMap = {
  * @param {String} char 需要转移的字符串
  * @returns {String} 转义后的字符串
  */
-function escape(char){
+export function escape(char){
     if(char.length === 0) return "";
     return Object.keys(escapeCharMap).reduce((newStr, element) => newStr.replace(new RegExp(element, 'g'), escapeCharMap[element]), String(char));
 }

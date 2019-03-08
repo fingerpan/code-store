@@ -18,4 +18,4 @@ export function toLocaleString(value) {
     return parseFloat(value).toFixed(2).replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g, "$1,")
 }
 
-// const toLocaleString = i => parseFloat(i).toFixed(2).replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g, "$1,")
+// export const toLocaleString = i => parseFloat(i).toFixed(2).replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g, "$1,")
